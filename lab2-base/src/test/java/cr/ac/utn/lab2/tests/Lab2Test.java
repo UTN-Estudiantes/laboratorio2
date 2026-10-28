@@ -52,8 +52,15 @@ class Lab2Test extends BaseTest {
 
     @Test
     void t2_usuarioInvalidoMuestraError() {
-        // Use un usuario que no existe. Compruebe que el mensaje contiene "Your username is invalid!".
-        fail("Pendiente: T2");
+        // Arrange
+        LoginPage login = new LoginPage(driver).abrir();
+
+        // Act
+        login.iniciarSesionFallido("usuarioInexistente", CLAVE_VALIDA);
+
+        // Assert
+        String mensaje = login.mensaje();
+        assertTrue(mensaje.contains("Your username is invalid!"), "Mensaje real: " + mensaje);
     }
 
     @Test
