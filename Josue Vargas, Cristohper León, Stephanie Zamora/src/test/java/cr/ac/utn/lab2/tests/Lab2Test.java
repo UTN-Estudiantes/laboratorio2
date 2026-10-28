@@ -130,7 +130,17 @@ class Lab2Test extends BaseTest {
     @Test
     void t7_agregarYQuitarElementos() {
         // En AddRemovePage agregue 3 elementos, elimine 1 y compruebe que quedan 2 botones Delete.
-        fail("Pendiente: T7");
+        // Arrange
+        AddRemovePage addRemovePage = new AddRemovePage(driver).abrir();
+
+        // Act
+        addRemovePage.agregar()
+                .agregar()
+                .agregar()
+                .eliminarPrimero();
+
+        // Assert
+        assertEquals(2, addRemovePage.cantidadDeBotonesEliminar());
     }
 
     @Test
