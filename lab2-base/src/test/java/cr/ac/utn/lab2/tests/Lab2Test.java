@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import cr.ac.utn.lab2.base.BaseTest;
+import cr.ac.utn.lab2.pages.AddRemovePage;
 import cr.ac.utn.lab2.pages.CheckboxesPage;
 import cr.ac.utn.lab2.pages.DropdownPage;
 import cr.ac.utn.lab2.pages.LoginPage;
@@ -126,8 +127,16 @@ class Lab2Test extends BaseTest {
 
     @Test
     void t7_agregarYQuitarElementos() {
-        // En AddRemovePage agregue 3 elementos, elimine 1 y compruebe que quedan 2 botones Delete.
-        fail("Pendiente: T7");
+        // Arrange
+        AddRemovePage pagina = new AddRemovePage(driver).abrir();
+
+        // Act
+        pagina.agregar().agregar().agregar();
+        assertEquals(3, pagina.cantidadDeBotonesEliminar(), "Deben existir 3 botones Delete");
+        pagina.eliminarPrimero();
+
+        // Assert
+        assertEquals(2, pagina.cantidadDeBotonesEliminar());
     }
 
     @Test
