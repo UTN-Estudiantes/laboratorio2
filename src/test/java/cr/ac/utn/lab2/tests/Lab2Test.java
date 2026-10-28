@@ -1,8 +1,12 @@
 package cr.ac.utn.lab2.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import cr.ac.utn.lab2.base.BaseTest;
+import cr.ac.utn.lab2.pages.LoginPage;
+import cr.ac.utn.lab2.pages.SecureAreaPage;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -28,10 +32,13 @@ class Lab2Test extends BaseTest {
 
     @Test
     void t1_loginValidoLlevaALaZonaSegura() {
-        // Inicie sesion con el usuario y la clave validos.
-        // Compruebe: titulo "Secure Area", mensaje que contiene "You logged into a secure area!"
-        // y que la URL actual termina en /secure.
-        fail("Pendiente: T1");
+        LoginPage loginPage = new LoginPage(driver).abrir();
+
+        SecureAreaPage zonaSegura = loginPage.iniciarSesion("tomsmith", "SuperSecretPassword!");
+
+        assertEquals("Secure Area", zonaSegura.titulo());
+        assertTrue(zonaSegura.mensaje().contains("You logged into a secure area!"));
+        assertTrue(zonaSegura.urlActual().endsWith("/secure"));
     }
 
     @Test
