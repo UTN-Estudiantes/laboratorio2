@@ -1,8 +1,17 @@
 package cr.ac.utn.lab2.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import cr.ac.utn.lab2.base.BaseTest;
+import cr.ac.utn.lab2.pages.AddRemovePage;
+import cr.ac.utn.lab2.pages.CheckboxesPage;
+import cr.ac.utn.lab2.pages.DropdownPage;
+import cr.ac.utn.lab2.pages.LoginPage;
+import cr.ac.utn.lab2.pages.SecureAreaPage;
+import cr.ac.utn.lab2.pages.TablePage;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -24,6 +33,9 @@ import org.junit.jupiter.api.Test;
  */
 class Lab2Test extends BaseTest {
 
+    private static final String USUARIO = "tomsmith";
+    private static final String CLAVE = "SuperSecretPassword!";
+
     // ---------------- Login (LoginPage, SecureAreaPage) ----------------
 
     @Test
@@ -31,13 +43,34 @@ class Lab2Test extends BaseTest {
         // Inicie sesion con el usuario y la clave validos.
         // Compruebe: titulo "Secure Area", mensaje que contiene "You logged into a secure area!"
         // y que la URL actual termina en /secure.
-        fail("Pendiente: T1");
+
+        // Arrange
+        LoginPage login = new LoginPage(driver).abrir();
+
+        // Act
+        SecureAreaPage zonaSegura = login.iniciarSesion(USUARIO, CLAVE);
+
+        // Assert
+        assertEquals("Secure Area", zonaSegura.titulo());
+        assertTrue(zonaSegura.mensaje().contains("You logged into a secure area!"),
+                "Mensaje real: " + zonaSegura.mensaje());
+        assertTrue(zonaSegura.urlActual().endsWith("/secure"),
+                "URL real: " + zonaSegura.urlActual());
     }
 
     @Test
     void t2_usuarioInvalidoMuestraError() {
         // Use un usuario que no existe. Compruebe que el mensaje contiene "Your username is invalid!".
-        fail("Pendiente: T2");
+
+        // Arrange
+        LoginPage login = new LoginPage(driver).abrir();
+
+        // Act
+        login.iniciarSesionFallido("usuarioInexistente", CLAVE);
+
+        // Assert
+        assertTrue(login.mensaje().contains("Your username is invalid!"),
+                "Mensaje real: " + login.mensaje());
     }
 
     @Test
