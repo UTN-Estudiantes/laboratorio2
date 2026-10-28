@@ -117,7 +117,14 @@ class Lab2Test extends BaseTest {
     @Test
     void t6_listaDesplegable() {
         // En DropdownPage seleccione "Option 2" y compruebe que esa es la opcion seleccionada.
-        fail("Pendiente: T6");
+        // Arrange
+        DropdownPage dropdownPage = new DropdownPage(driver).abrir();
+
+        // Act
+        dropdownPage.seleccionar("Option 2");
+
+        // Assert
+        assertEquals("Option 2", dropdownPage.opcionSeleccionada());
     }
 
     @Test
