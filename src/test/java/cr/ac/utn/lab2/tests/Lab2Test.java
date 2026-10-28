@@ -109,13 +109,33 @@ class Lab2Test extends BaseTest {
     void t5_casillasDeVerificacion() {
         // En CheckboxesPage hay 2 casillas. Al inicio la primera NO esta marcada y la segunda SI.
         // Marque la primera y compruebe que ahora ambas estan marcadas.
-        fail("Pendiente: T5");
+
+        // Arrange
+        CheckboxesPage casillas = new CheckboxesPage(driver).abrir();
+        assertEquals(2, casillas.cantidadDeCasillas());
+        assertFalse(casillas.estaMarcada(0), "La primera casilla deberia iniciar sin marcar");
+        assertTrue(casillas.estaMarcada(1), "La segunda casilla deberia iniciar marcada");
+
+        // Act
+        casillas.alternar(0);
+
+        // Assert
+        assertTrue(casillas.estaMarcada(0), "La primera casilla deberia quedar marcada");
+        assertTrue(casillas.estaMarcada(1), "La segunda casilla deberia seguir marcada");
     }
 
     @Test
     void t6_listaDesplegable() {
         // En DropdownPage seleccione "Option 2" y compruebe que esa es la opcion seleccionada.
-        fail("Pendiente: T6");
+
+        // Arrange
+        DropdownPage lista = new DropdownPage(driver).abrir();
+
+        // Act
+        lista.seleccionar("Option 2");
+
+        // Assert
+        assertEquals("Option 2", lista.opcionSeleccionada());
     }
 
     @Test
