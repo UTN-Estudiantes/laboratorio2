@@ -83,7 +83,16 @@ class Lab2Test extends BaseTest {
     @Test
     void t4_cerrarSesionVuelveAlLogin() {
         // Inicie sesion, cierre sesion y compruebe que el mensaje contiene "You logged out of the secure area!".
-        fail("Pendiente: T4");
+        // Arrange
+        SecureAreaPage secureAreaPage = new LoginPage(driver)
+                .abrir()
+                .iniciarSesion("tomsmith", "SuperSecretPassword!");
+
+        // Act
+        LoginPage loginPage = secureAreaPage.cerrarSesion();
+
+        // Assert
+        assertTrue(loginPage.mensaje().contains("You logged out of the secure area!"));
     }
 
     // ---------------- Otras pantallas ----------------
