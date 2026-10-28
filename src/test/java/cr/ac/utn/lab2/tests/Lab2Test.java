@@ -3,7 +3,6 @@ package cr.ac.utn.lab2.tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import cr.ac.utn.lab2.base.BaseTest;
 import cr.ac.utn.lab2.pages.AddRemovePage;
@@ -141,14 +140,34 @@ class Lab2Test extends BaseTest {
     @Test
     void t7_agregarYQuitarElementos() {
         // En AddRemovePage agregue 3 elementos, elimine 1 y compruebe que quedan 2 botones Delete.
-        fail("Pendiente: T7");
+
+        // Arrange
+        AddRemovePage pagina = new AddRemovePage(driver).abrir();
+        pagina.agregar().agregar().agregar();
+        assertEquals(3, pagina.cantidadDeBotonesEliminar());
+
+        // Act
+        pagina.eliminarPrimero();
+
+        // Assert
+        assertEquals(2, pagina.cantidadDeBotonesEliminar());
     }
 
     @Test
     void t8_ordenarTablaPorApellido() {
         // En TablePage ordene por "Last Name" (una vez, ascendente) y compruebe que
         // el apellido de la primera fila es "Bach" y el de la ultima es "Smith".
-        fail("Pendiente: T8");
+
+        // Arrange
+        TablePage tabla = new TablePage(driver).abrir();
+
+        // Act
+        tabla.ordenarPor("Last Name");
+
+        // Assert
+        int ultimaFila = tabla.cantidadDeFilas() - 1;
+        assertEquals("Bach", tabla.celda(0, 0));
+        assertEquals("Smith", tabla.celda(ultimaFila, 0));
     }
 
     // ---------------- Bono ----------------
@@ -158,6 +177,14 @@ class Lab2Test extends BaseTest {
         // BONO: agregue a TablePage un metodo nuevo, por ejemplo correoPorApellido(String apellido),
         // que recorra las filas y devuelva el correo. Compruebe que el correo de "Doe" es jdoe@hotmail.com.
         // La prueba NO debe contener localizadores.
-        fail("Pendiente: T9 (bono)");
+
+        // Arrange
+        TablePage tabla = new TablePage(driver).abrir();
+
+        // Act
+        String correo = tabla.correoPorApellido("Doe");
+
+        // Assert
+        assertEquals("jdoe@hotmail.com", correo);
     }
 }
