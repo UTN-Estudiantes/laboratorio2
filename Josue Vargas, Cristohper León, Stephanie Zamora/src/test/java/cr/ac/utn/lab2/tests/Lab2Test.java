@@ -147,7 +147,16 @@ class Lab2Test extends BaseTest {
     void t8_ordenarTablaPorApellido() {
         // En TablePage ordene por "Last Name" (una vez, ascendente) y compruebe que
         // el apellido de la primera fila es "Bach" y el de la ultima es "Smith".
-        fail("Pendiente: T8");
+        // Arrange
+        TablePage tablePage = new TablePage(driver).abrir();
+
+        // Act
+        tablePage.ordenarPor("Last Name");
+
+        // Assert
+        int ultimaFila = tablePage.cantidadDeFilas() - 1;
+        assertEquals("Bach", tablePage.celda(0, 0));
+        assertEquals("Smith", tablePage.celda(ultimaFila, 0));
     }
 
     // ---------------- Bono ----------------
