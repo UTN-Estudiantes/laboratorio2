@@ -65,8 +65,15 @@ class Lab2Test extends BaseTest {
 
     @Test
     void t3_claveInvalidaMuestraError() {
-        // Use el usuario valido con una clave incorrecta. Mensaje: "Your password is invalid!".
-        fail("Pendiente: T3");
+        // Arrange
+        LoginPage login = new LoginPage(driver).abrir();
+
+        // Act
+        login.iniciarSesionFallido(USUARIO_VALIDO, "claveIncorrecta");
+
+        // Assert
+        String mensaje = login.mensaje();
+        assertTrue(mensaje.contains("Your password is invalid!"), "Mensaje real: " + mensaje);
     }
 
     @Test
