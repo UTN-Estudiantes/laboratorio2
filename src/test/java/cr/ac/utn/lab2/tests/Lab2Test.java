@@ -1,10 +1,12 @@
 package cr.ac.utn.lab2.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import cr.ac.utn.lab2.base.BaseTest;
+import cr.ac.utn.lab2.pages.CheckboxesPage;
 import cr.ac.utn.lab2.pages.LoginPage;
 import cr.ac.utn.lab2.pages.SecureAreaPage;
 import org.junit.jupiter.api.Test;
@@ -73,9 +75,14 @@ class Lab2Test extends BaseTest {
 
     @Test
     void t5_casillasDeVerificacion() {
-        // En CheckboxesPage hay 2 casillas. Al inicio la primera NO esta marcada y la segunda SI.
-        // Marque la primera y compruebe que ahora ambas estan marcadas.
-        fail("Pendiente: T5");
+        CheckboxesPage casillas = new CheckboxesPage(driver).abrir();
+        assertFalse(casillas.estaMarcada(0));
+        assertTrue(casillas.estaMarcada(1));
+
+        casillas.alternar(0);
+
+        assertTrue(casillas.estaMarcada(0));
+        assertTrue(casillas.estaMarcada(1));
     }
 
     @Test
