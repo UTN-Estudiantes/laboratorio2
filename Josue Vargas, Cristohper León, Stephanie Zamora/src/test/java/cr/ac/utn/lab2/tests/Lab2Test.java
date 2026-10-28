@@ -13,146 +13,99 @@ import cr.ac.utn.lab2.pages.SecureAreaPage;
 import cr.ac.utn.lab2.pages.TablePage;
 import org.junit.jupiter.api.Test;
 
-/**
- * LABORATORIO 2 - PRUEBAS AUTOMATIZADAS CON POM
- *
- * Las paginas (paquete cr.ac.utn.lab2.pages) ya estan hechas con Page Factory.
- * Su trabajo: construir las pruebas usando ESAS paginas, siguiendo el patron POM.
- *
- * Reglas:
- *  - Ninguna prueba contiene By ni @FindBy: solo llama metodos de las paginas.
- *  - Las aserciones (assertEquals, assertTrue...) van en la prueba, no en la pagina.
- *  - Cada prueba es independiente (BaseTest abre un Chrome limpio para cada una).
- *  - Si necesita un metodo que la pagina no tiene, agreguelo a la pagina (solo en el bono es obligatorio).
- *
- * Datos del sitio https://the-internet.herokuapp.com :
- *   usuario valido:  tomsmith      clave valida: SuperSecretPassword!
- *
- * Ejecutar:  mvn test        (al inicio todo falla: es lo esperado)
- */
 class Lab2Test extends BaseTest {
 
     // ---------------- Login (LoginPage, SecureAreaPage) ----------------
 
+    // T1: Login valido lleva a la zona segura
     @Test
     void t1_loginValidoLlevaALaZonaSegura() {
-        // Inicie sesion con el usuario y la clave validos.
-        // Compruebe: titulo "Secure Area", mensaje que contiene "You logged into a secure area!"
-        // y que la URL actual termina en /secure.
-
-        // Arrange
         LoginPage loginPage = new LoginPage(driver).abrir();
 
-        // Act
         SecureAreaPage secureAreaPage = loginPage.iniciarSesion("tomsmith", "SuperSecretPassword!");
 
-        // Assert
         assertEquals("Secure Area", secureAreaPage.titulo());
         assertTrue(secureAreaPage.mensaje().contains("You logged into a secure area!"));
         assertTrue(secureAreaPage.urlActual().endsWith("/secure"));
     }
 
+    // T2: Usuario invalido muestra error
     @Test
     void t2_usuarioInvalidoMuestraError() {
-        // Use un usuario que no existe. Compruebe que el mensaje contiene "Your username is invalid!".
-
-        // Arrange
         LoginPage loginPage = new LoginPage(driver).abrir();
 
-        // Act
         loginPage.iniciarSesionFallido("usuario_inexistente", "SuperSecretPassword!");
 
-        // Assert
         assertTrue(loginPage.mensaje().contains("Your username is invalid!"));
     }
 
+    // T3: Clave invalida muestra error
     @Test
     void t3_claveInvalidaMuestraError() {
-        // Use el usuario valido con una clave incorrecta. Mensaje: "Your password is invalid!".
-        // Arrange
         LoginPage loginPage = new LoginPage(driver).abrir();
 
-        // Act
         loginPage.iniciarSesionFallido("tomsmith", "ClaveIncorrecta123");
 
-        // Assert
         assertTrue(loginPage.mensaje().contains("Your password is invalid!"));
     }
 
+    // T4: Cerrar sesion vuelve al login
     @Test
     void t4_cerrarSesionVuelveAlLogin() {
-        // Inicie sesion, cierre sesion y compruebe que el mensaje contiene "You logged out of the secure area!".
-        // Arrange
         SecureAreaPage secureAreaPage = new LoginPage(driver)
                 .abrir()
                 .iniciarSesion("tomsmith", "SuperSecretPassword!");
 
-        // Act
         LoginPage loginPage = secureAreaPage.cerrarSesion();
 
-        // Assert
         assertTrue(loginPage.mensaje().contains("You logged out of the secure area!"));
     }
 
     // ---------------- Otras pantallas ----------------
 
+    // T5: Casillas de verificacion
     @Test
     void t5_casillasDeVerificacion() {
-        // En CheckboxesPage hay 2 casillas. Al inicio la primera NO esta marcada y la segunda SI.
-        // Marque la primera y compruebe que ahora ambas estan marcadas.
-        // Arrange
         CheckboxesPage checkboxesPage = new CheckboxesPage(driver).abrir();
         assertFalse(checkboxesPage.estaMarcada(0));
         assertTrue(checkboxesPage.estaMarcada(1));
 
-        // Act
         checkboxesPage.alternar(0);
 
-        // Assert
         assertTrue(checkboxesPage.estaMarcada(0));
         assertTrue(checkboxesPage.estaMarcada(1));
     }
 
+    // T6: Lista desplegable
     @Test
     void t6_listaDesplegable() {
-        // En DropdownPage seleccione "Option 2" y compruebe que esa es la opcion seleccionada.
-        // Arrange
         DropdownPage dropdownPage = new DropdownPage(driver).abrir();
 
-        // Act
         dropdownPage.seleccionar("Option 2");
 
-        // Assert
         assertEquals("Option 2", dropdownPage.opcionSeleccionada());
     }
 
+    // T7: Agregar y quitar elementos
     @Test
     void t7_agregarYQuitarElementos() {
-        // En AddRemovePage agregue 3 elementos, elimine 1 y compruebe que quedan 2 botones Delete.
-        // Arrange
         AddRemovePage addRemovePage = new AddRemovePage(driver).abrir();
 
-        // Act
         addRemovePage.agregar()
                 .agregar()
                 .agregar()
                 .eliminarPrimero();
 
-        // Assert
         assertEquals(2, addRemovePage.cantidadDeBotonesEliminar());
     }
 
+    // T8: Ordenar tabla por apellido
     @Test
     void t8_ordenarTablaPorApellido() {
-        // En TablePage ordene por "Last Name" (una vez, ascendente) y compruebe que
-        // el apellido de la primera fila es "Bach" y el de la ultima es "Smith".
-        // Arrange
         TablePage tablePage = new TablePage(driver).abrir();
 
-        // Act
         tablePage.ordenarPor("Last Name");
 
-        // Assert
         int ultimaFila = tablePage.cantidadDeFilas() - 1;
         assertEquals("Bach", tablePage.celda(0, 0));
         assertEquals("Smith", tablePage.celda(ultimaFila, 0));
@@ -160,18 +113,13 @@ class Lab2Test extends BaseTest {
 
     // ---------------- Bono ----------------
 
+    // T9 (Bono): Correo de una persona por apellido
     @Test
     void t9_bono_correoDeUnaPersona() {
-        // BONO: agregue a TablePage un metodo nuevo, por ejemplo correoPorApellido(String apellido),
-        // que recorra las filas y devuelva el correo. Compruebe que el correo de "Doe" es jdoe@hotmail.com.
-        // La prueba NO debe contener localizadores.
-        // Arrange
         TablePage tablePage = new TablePage(driver).abrir();
 
-        // Act
         String correo = tablePage.correoPorApellido("Doe");
 
-        // Assert
         assertEquals("jdoe@hotmail.com", correo);
     }
 }

@@ -1,27 +1,63 @@
-# ISW-622 · Laboratorio 2 · Pruebas automatizadas con POM
+# Pruebas Automatizadas con POM — Laboratorio 2 (Semana 7)
 
-Sitio de práctica: **https://the-internet.herokuapp.com** (público, necesita internet).
-Usuario válido: `tomsmith` · Clave válida: `SuperSecretPassword!`
+**Curso:** ISW-622 Pruebas de Software — III Cuatrimestre 2026  
+**Institución:** Universidad Técnica Nacional (UTN)  
+**Docente:** Jose David Carvajal Jiménez  
+**Sitio de prueba:** https://the-internet.herokuapp.com
 
-## Qué trae este proyecto
+## Integrantes del Grupo
+
+- Josue Vargas
+- Cristohper León
+- Stephanie Zamora
+
+---
+
+## Estructura del Proyecto
+
 ```
-src/test/java/cr/ac/utn/lab2/
-├── base/   BaseTest (abre/cierra Chrome) y Visual (pausa para ver el navegador)
-├── pages/  Páginas YA HECHAS con Page Factory: LoginPage, SecureAreaPage, CheckboxesPage,
-│           DropdownPage, AddRemovePage, TablePage
-└── tests/  Lab2Test.java  <- AQUÍ trabajan: 8 pruebas + 1 de bono, todas empiezan en rojo
+.
+├── .gitignore
+├── pom.xml
+├── README.md
+└── src/
+    └── test/
+        └── java/
+            └── cr/ac/utn/lab2/
+                ├── base/
+                │   ├── BaseTest.java
+                │   └── Visual.java
+                ├── pages/
+                │   ├── AddRemovePage.java
+                │   ├── CheckboxesPage.java
+                │   ├── DropdownPage.java
+                │   ├── LoginPage.java
+                │   ├── SecureAreaPage.java
+                │   └── TablePage.java
+                └── tests/
+                    └── Lab2Test.java
 ```
 
-## Qué deben hacer
-Construir las pruebas de `Lab2Test.java` **usando las páginas existentes** (patrón POM):
-- Ningún `By` ni `@FindBy` dentro de las pruebas.
-- Las aserciones van en la prueba, no en la página.
-- Cada prueba es independiente.
+---
 
-## Cómo ejecutar (desde la carpeta que contiene pom.xml)
+## Ejecución de Pruebas Automatizadas
+
+Para ejecutar la suite completa de 9 pruebas (8 obligatorias + 1 de bono) con Maven:
+
+```bash
+mvn test
 ```
-mvn test                     # las 9 pruebas (al inicio todas fallan: es lo esperado)
-mvn test -Dtest=Lab2Test#t1_loginValidoLlevaALaZonaSegura    # una sola prueba
-mvn test -Dritmo=0           # sin pausas visuales
-mvn test -Dheadless=true     # sin ventana del navegador
-```
+
+---
+
+## Pruebas Cubiertas (Patrón Page Object Model)
+
+- **T1:** `t1_loginValidoLlevaALaZonaSegura` (Login válido y verificación de zona segura) — _Josue Vargas_
+- **T2:** `t2_usuarioInvalidoMuestraError` (Validación de mensaje de usuario inválido) — _Josue Vargas_
+- **T3:** `t3_claveInvalidaMuestraError` (Validación de mensaje de contraseña inválida) — _Cristohper León_
+- **T4:** `t4_cerrarSesionVuelveAlLogin` (Cierre de sesión y verificación de mensaje de salida) — _Cristohper León_
+- **T5:** `t5_casillasDeVerificacion` (Estado inicial y marcado de casillas de verificación) — _Stephanie Zamora_
+- **T6:** `t6_listaDesplegable` (Selección y verificación de "Option 2" en lista desplegable) — _Stephanie Zamora_
+- **T7:** `t7_agregarYQuitarElementos` (Agregar 3 elementos, eliminar 1 y verificar 2 restantes) — _Cristohper León_
+- **T8:** `t8_ordenarTablaPorApellido` (Ordenamiento por Last Name: primera fila Bach y última Smith) — _Stephanie Zamora_
+- **T9 (Bono):** `t9_bono_correoDeUnaPersona` + `TablePage.correoPorApellido` (Búsqueda de correo de Doe: `jdoe@hotmail.com`) — _Colaborativo_
