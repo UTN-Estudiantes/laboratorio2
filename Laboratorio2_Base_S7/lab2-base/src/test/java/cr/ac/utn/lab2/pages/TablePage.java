@@ -57,4 +57,18 @@ public class TablePage {
         List<WebElement> celdas = filas.get(fila).findElements(By.tagName("td"));
         return celdas.get(columna).getText().trim();
     }
+
+    /**
+     * Retorna el correo electrónico correspondiente a una persona identificada por su apellido.
+     * En la tabla, la columna 0 corresponde a 'Last Name' y la columna 2 a 'Email'.
+     */
+    public String correoPorApellido(String apellido) {
+        for (int i = 0; i < cantidadDeFilas(); i++) {
+            if (celda(i, 0).equalsIgnoreCase(apellido)) {
+                return celda(i, 2);
+            }
+        }
+        throw new IllegalArgumentException("No se encontró ninguna persona con el apellido: " + apellido);
+    }
 }
+
