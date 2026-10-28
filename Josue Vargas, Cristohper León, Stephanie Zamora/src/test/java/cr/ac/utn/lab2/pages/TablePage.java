@@ -57,4 +57,14 @@ public class TablePage {
         List<WebElement> celdas = filas.get(fila).findElements(By.tagName("td"));
         return celdas.get(columna).getText().trim();
     }
+
+    /** Busca una fila por su apellido (columna 0) y devuelve su correo electronico (columna 2). */
+    public String correoPorApellido(String apellido) {
+        for (int i = 0; i < cantidadDeFilas(); i++) {
+            if (celda(i, 0).equals(apellido)) {
+                return celda(i, 2);
+            }
+        }
+        throw new IllegalArgumentException("No existe el apellido: " + apellido);
+    }
 }

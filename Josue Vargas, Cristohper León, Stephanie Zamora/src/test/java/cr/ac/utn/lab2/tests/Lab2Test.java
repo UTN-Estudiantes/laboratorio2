@@ -3,7 +3,6 @@ package cr.ac.utn.lab2.tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import cr.ac.utn.lab2.base.BaseTest;
 import cr.ac.utn.lab2.pages.AddRemovePage;
@@ -166,6 +165,13 @@ class Lab2Test extends BaseTest {
         // BONO: agregue a TablePage un metodo nuevo, por ejemplo correoPorApellido(String apellido),
         // que recorra las filas y devuelva el correo. Compruebe que el correo de "Doe" es jdoe@hotmail.com.
         // La prueba NO debe contener localizadores.
-        fail("Pendiente: T9 (bono)");
+        // Arrange
+        TablePage tablePage = new TablePage(driver).abrir();
+
+        // Act
+        String correo = tablePage.correoPorApellido("Doe");
+
+        // Assert
+        assertEquals("jdoe@hotmail.com", correo);
     }
 }
