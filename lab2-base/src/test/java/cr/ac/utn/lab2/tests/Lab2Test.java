@@ -1,8 +1,12 @@
 package cr.ac.utn.lab2.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import cr.ac.utn.lab2.base.BaseTest;
+import cr.ac.utn.lab2.pages.LoginPage;
+import cr.ac.utn.lab2.pages.SecureAreaPage;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -24,20 +28,32 @@ import org.junit.jupiter.api.Test;
  */
 class Lab2Test extends BaseTest {
 
+    private static final String USUARIO_VALIDO = "tomsmith";
+    private static final String CLAVE_VALIDA = "SuperSecretPassword!";
+
     // ---------------- Login (LoginPage, SecureAreaPage) ----------------
 
     @Test
     void t1_loginValidoLlevaALaZonaSegura() {
-        // Inicie sesion con el usuario y la clave validos.
-        // Compruebe: titulo "Secure Area", mensaje que contiene "You logged into a secure area!"
-        // y que la URL actual termina en /secure.
-        fail("Pendiente: T1");
+        // Arrange
+        LoginPage login = new LoginPage(driver).abrir();
+
+        // Act
+        SecureAreaPage zonaSegura = login.iniciarSesion(USUARIO_VALIDO, CLAVE_VALIDA);
+
+        // Assert
+        assertEquals("Secure Area", zonaSegura.titulo());
+        String mensaje = zonaSegura.mensaje();
+        assertTrue(mensaje.contains("You logged into a secure area!"),
+                "Mensaje real: " + mensaje);
+        String url = zonaSegura.urlActual();
+        assertTrue(url.endsWith("/secure"), "URL real: " + url);
     }
 
     @Test
     void t2_usuarioInvalidoMuestraError() {
         // Use un usuario que no existe. Compruebe que el mensaje contiene "Your username is invalid!".
-        fail("Pendiente: T2 prueba commit");
+        fail("Pendiente: T2");
     }
 
     @Test
