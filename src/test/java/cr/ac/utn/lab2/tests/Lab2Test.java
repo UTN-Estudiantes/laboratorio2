@@ -76,13 +76,31 @@ class Lab2Test extends BaseTest {
     @Test
     void t3_claveInvalidaMuestraError() {
         // Use el usuario valido con una clave incorrecta. Mensaje: "Your password is invalid!".
-        fail("Pendiente: T3");
+
+        // Arrange
+        LoginPage login = new LoginPage(driver).abrir();
+
+        // Act
+        login.iniciarSesionFallido(USUARIO, "claveIncorrecta");
+
+        // Assert
+        assertTrue(login.mensaje().contains("Your password is invalid!"),
+                "Mensaje real: " + login.mensaje());
     }
 
     @Test
     void t4_cerrarSesionVuelveAlLogin() {
         // Inicie sesion, cierre sesion y compruebe que el mensaje contiene "You logged out of the secure area!".
-        fail("Pendiente: T4");
+
+        // Arrange
+        SecureAreaPage zonaSegura = new LoginPage(driver).abrir().iniciarSesion(USUARIO, CLAVE);
+
+        // Act
+        LoginPage login = zonaSegura.cerrarSesion();
+
+        // Assert
+        assertTrue(login.mensaje().contains("You logged out of the secure area!"),
+                "Mensaje real: " + login.mensaje());
     }
 
     // ---------------- Otras pantallas ----------------
