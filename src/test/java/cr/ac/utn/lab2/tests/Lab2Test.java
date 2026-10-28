@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import cr.ac.utn.lab2.base.BaseTest;
 import cr.ac.utn.lab2.pages.CheckboxesPage;
+import cr.ac.utn.lab2.pages.DropdownPage;
 import cr.ac.utn.lab2.pages.LoginPage;
 import cr.ac.utn.lab2.pages.SecureAreaPage;
 import org.junit.jupiter.api.Test;
@@ -87,8 +88,11 @@ class Lab2Test extends BaseTest {
 
     @Test
     void t6_listaDesplegable() {
-        // En DropdownPage seleccione "Option 2" y compruebe que esa es la opcion seleccionada.
-        fail("Pendiente: T6");
+        DropdownPage lista = new DropdownPage(driver).abrir();
+
+        lista.seleccionar("Option 2");
+
+        assertEquals("Option 2", lista.opcionSeleccionada());
     }
 
     @Test
