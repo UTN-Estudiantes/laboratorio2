@@ -101,7 +101,17 @@ class Lab2Test extends BaseTest {
     void t5_casillasDeVerificacion() {
         // En CheckboxesPage hay 2 casillas. Al inicio la primera NO esta marcada y la segunda SI.
         // Marque la primera y compruebe que ahora ambas estan marcadas.
-        fail("Pendiente: T5");
+        // Arrange
+        CheckboxesPage checkboxesPage = new CheckboxesPage(driver).abrir();
+        assertFalse(checkboxesPage.estaMarcada(0));
+        assertTrue(checkboxesPage.estaMarcada(1));
+
+        // Act
+        checkboxesPage.alternar(0);
+
+        // Assert
+        assertTrue(checkboxesPage.estaMarcada(0));
+        assertTrue(checkboxesPage.estaMarcada(1));
     }
 
     @Test
