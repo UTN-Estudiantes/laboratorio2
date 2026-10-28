@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: cr.ac.utn.lab2.tests.Lab2Test
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 40.28 s -- in cr.ac.utn.lab2.tests.Lab2Test
